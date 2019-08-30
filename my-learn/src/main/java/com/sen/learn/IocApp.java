@@ -14,6 +14,7 @@ public class IocApp {
 	public static void main(String[] args) {
 		//ApplicationContext context = new ClassPathXmlApplicationContext("spring-core.xml");
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
 		DogDao dogDao = context.getBean(DogDao.class);
 		dogDao.query("二哈", 10);
 		System.out.println();
