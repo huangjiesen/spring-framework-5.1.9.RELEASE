@@ -1,6 +1,7 @@
 package com.sen.learn.config;
 
-import com.sen.learn.config.dao.MapperScan;
+import com.sen.learn.mapper.SqlSession;
+import com.sen.learn.mapper.MapperScan;
 import com.sen.learn.service.DogService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,16 @@ public class AppConfig {
 		return new DogService();
 	}
 
+
+	// sql session 模拟类
+	@Bean
+	public SqlSession sqlSession() {
+		return new SqlSession();
+	}
+
 	//@Bean
 	//public MapperBeanDefinitionRegistryPostProcessor daoBeanDefinitionRegistryPostProcessor() {
 	//	return new MapperBeanDefinitionRegistryPostProcessor();
 	//}
+
 }

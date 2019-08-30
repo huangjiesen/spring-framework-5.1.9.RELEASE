@@ -1,4 +1,4 @@
-package com.sen.learn.config.dao;
+package com.sen.learn.mapper;
 
 import java.lang.annotation.*;
 

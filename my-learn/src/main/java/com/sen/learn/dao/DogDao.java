@@ -1,8 +1,8 @@
 package com.sen.learn.dao;
 
-import com.sen.learn.config.dao.Mapper;
-import com.sen.learn.config.dao.Param;
-import com.sen.learn.config.dao.Select;
+import com.sen.learn.mapper.Mapper;
+import com.sen.learn.mapper.Param;
+import com.sen.learn.mapper.Select;
 
 /**
  * @author HuangJS
@@ -11,6 +11,6 @@ import com.sen.learn.config.dao.Select;
 @Mapper
 public interface DogDao {
 
-	@Select("select * from table where id=#{id} and age=#{age} and name = #{name}")
-	String save(@Param("name") String name,@Param("age") int age);
+	@Select("select * from table where age=#{age} and name = #{name}")
+	String query(@Param("name") String name,@Param("age") int age);
 }

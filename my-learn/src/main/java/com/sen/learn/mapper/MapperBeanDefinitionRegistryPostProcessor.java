@@ -1,4 +1,4 @@
-package com.sen.learn.config.dao;
+package com.sen.learn.mapper;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ResourceLoaderAware;
@@ -26,8 +26,6 @@ public class MapperBeanDefinitionRegistryPostProcessor implements ImportBeanDefi
 		}
 		scanner.registerFilters();
 		scanner.doScan(values);
-
-		System.out.println("Mapper 接口扫描完毕");
 	}
 
 	@Override

@@ -13,6 +13,6 @@ public class DogService {
 
 	public void save() {
 		System.out.println("dog service save info");
-		dogDao.save("haha",29);
+		dogDao.query("haha",29);
 	}
 }

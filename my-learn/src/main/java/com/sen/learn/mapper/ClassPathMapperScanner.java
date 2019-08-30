@@ -1,4 +1,4 @@
-package com.sen.learn.config.dao;
+package com.sen.learn.mapper;
 
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -33,19 +33,22 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 	}
 
 	private void processBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitions) {
+		System.out.println("start register mappers");
 		GenericBeanDefinition definition;
 		for (BeanDefinitionHolder holder : beanDefinitions) {
 			definition = (GenericBeanDefinition) holder.getBeanDefinition();
 
-			definition.getConstructorArgumentValues().addGenericArgumentValue(definition.getBeanClassName()); // issue #59
-
-			definition.getPropertyValues().add("vars", definition.getBeanClassName());
+			String beanClassName = definition.getBeanClassName();
+			definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // issue #59
+			definition.getPropertyValues().add("proxyTargetName",beanClassName);
 
 			definition.setBeanClass(MapperFactoryBean.class);
 			// 根据类型自动注入 - 对MapperFactoryBean的一些属性的set方法进行自动调用，以注入spring容器存在的引用
 			definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
-		}
 
+			System.out.println("register mapper " + beanClassName);
+		}
+		System.out.println("success register mappers\n");
 	}
 
 	// 必须使用注解 @Mapper

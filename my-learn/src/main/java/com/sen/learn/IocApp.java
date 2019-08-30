@@ -1,6 +1,7 @@
 package com.sen.learn;
 
 import com.sen.learn.config.AppConfig;
+import com.sen.learn.dao.CatDao;
 import com.sen.learn.dao.DogDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -13,9 +14,12 @@ public class IocApp {
 	public static void main(String[] args) {
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		DogDao dogDao = context.getBean(DogDao.class);
-		System.out.println("save result:" + dogDao.save("name", 33));
+		dogDao.query("二哈", 10);
+		System.out.println();
+		dogDao.query("小哈", 10);
 
-		//CatDao bean = context.getBean(CatDao.class);
-		//bean.save("tomo",2);
+		System.out.println();
+		CatDao catDao = context.getBean(CatDao.class);
+		catDao.select("tomo",22);
 	}
 }
