@@ -84,7 +84,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 		this();
-		// 注册传入的configuration bean
+		// 注册传入的configuration bean到beanDefinitionMap中
 		register(annotatedClasses);
 		refresh();
 	}
