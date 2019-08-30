@@ -4,9 +4,9 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="dogDao" class="com.sen.learn.dao.DogDao" />
+	<!--<bean id="dogDao" class="com.sen.learn.dao.DogDao" />-->
 
-	<bean id="dogService" class="com.sen.learn.service.DogService">
-		<property name="dogDao" ref="dogDao"></property>
-	</bean>
+	<!--<bean id="dogService" class="com.sen.learn.service.DogService">-->
+		<!--<property name="dogDao" ref="dogDao"></property>-->
+	<!--</bean>-->
 </beans>

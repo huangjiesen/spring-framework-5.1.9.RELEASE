@@ -15,16 +15,23 @@ public class MapperBeanDefinitionRegistryPostProcessor implements ImportBeanDefi
 	private ResourceLoader resourceLoader;
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+		// 获取MapperScan注解实例
 		AnnotationAttributes annoAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(MapperScan.class.getName()));
 		ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
 		if (resourceLoader != null) {
 			scanner.setResourceLoader(this.resourceLoader);
 		}
+
+		// 获取要扫描的包名
 		String[] values = annoAttrs.getStringArray("value");
 		if (values == null) {
 			throw new RuntimeException("No mapper package found,Please check your configuration");
 		}
+
+		// 设置bean扫描过虑
 		scanner.registerFilters();
+
+		// 执行扫描注册
 		scanner.doScan(values);
 	}
 

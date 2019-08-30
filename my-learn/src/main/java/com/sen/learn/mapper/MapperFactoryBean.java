@@ -3,6 +3,8 @@ package com.sen.learn.mapper;
 import org.springframework.beans.factory.FactoryBean;
 
 /**
+ * 实现了FactoryBean的类，spring会调用其getObject、getObjectType创建bean
+ * 可以在getObject方法自定义Bean的创建过程
  * @author HuangJS
  * @date 2019-08-29 10:43 AM
  */
@@ -29,6 +31,7 @@ public class MapperFactoryBean<T> implements FactoryBean<T> {
 	public MapperFactoryBean(Class<T> t) {
 		this.t = t;
 	}
+
 
 	@Override
 	public T getObject() throws Exception {

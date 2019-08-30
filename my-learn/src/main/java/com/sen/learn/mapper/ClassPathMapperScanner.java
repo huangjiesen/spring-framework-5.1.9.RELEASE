@@ -23,6 +23,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
 	@Override
 	public Set<BeanDefinitionHolder> doScan(String... basePackages) {
+		// 获取指定包下的 BeanDefinition
 		Set<BeanDefinitionHolder> hodlers = super.doScan(basePackages);
 		if (hodlers.isEmpty()) {
 			logger.warn("No mapper was found in '" + Arrays.toString(basePackages) + "' package. Please check your configuration.");
@@ -37,12 +38,13 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 		GenericBeanDefinition definition;
 		for (BeanDefinitionHolder holder : beanDefinitions) {
 			definition = (GenericBeanDefinition) holder.getBeanDefinition();
-
 			String beanClassName = definition.getBeanClassName();
-			definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // issue #59
-			definition.getPropertyValues().add("proxyTargetName",beanClassName);
 
-			definition.setBeanClass(MapperFactoryBean.class);
+			// 修改bean class为MapperFactoryBean，并将原bean作为构造参数传入
+			definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // 构造函数参数
+			definition.setBeanClass(MapperFactoryBean.class);                                 // factory bean
+			definition.getPropertyValues().add("proxyTargetName",beanClassName); // 属性注入
+
 			// 根据类型自动注入 - 对MapperFactoryBean的一些属性的set方法进行自动调用，以注入spring容器存在的引用
 			definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
 
@@ -53,9 +55,10 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
 	// 必须使用注解 @Mapper
 	public void registerFilters() {
+		// include filter
 		addIncludeFilter(new AnnotationTypeFilter(Mapper.class));
 
-		// exclude package-info.java
+		// exclude filter
 		//addExcludeFilter((metadataReader, metadataReaderFactory) -> false);
 	}
 
