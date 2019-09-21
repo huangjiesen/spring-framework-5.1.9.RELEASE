@@ -1,14 +1,14 @@
-package com.sen.learn.mapper;
+package com.sen.mapper;
 
 import java.lang.annotation.*;
 
 /**
  * @author HuangJS
- * @date 2019-08-29 11:10 AM
+ * @date 2019-08-29 11:12 AM
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Select {
+@Target(ElementType.PARAMETER)
+public @interface Param {
 	String value();
 }

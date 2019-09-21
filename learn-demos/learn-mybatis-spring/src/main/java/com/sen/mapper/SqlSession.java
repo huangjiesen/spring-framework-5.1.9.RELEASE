@@ -1,4 +1,4 @@
-package com.sen.learn.mapper;
+package com.sen.mapper;
 
 /**
  * sql session 模拟类

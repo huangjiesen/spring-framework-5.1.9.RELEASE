@@ -1,4 +1,4 @@
-package com.sen.learn.mapper;
+package com.sen.mapper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;

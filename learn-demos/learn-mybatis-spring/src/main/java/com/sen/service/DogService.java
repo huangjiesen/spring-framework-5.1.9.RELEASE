@@ -1,6 +1,6 @@
-package com.sen.learn.service;
+package com.sen.service;
 
-import com.sen.learn.dao.DogDao;
+import com.sen.dao.DogDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

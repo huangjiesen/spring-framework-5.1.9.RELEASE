@@ -1,10 +1,12 @@
-package com.sen.learn.config;
+package com.sen.config;
 
-import com.sen.learn.mapper.SqlSession;
-import com.sen.learn.mapper.MapperScan;
-import com.sen.learn.service.DogService;
+import com.sen.mapper.MapperScan;
+import com.sen.mapper.SqlSession;
+import com.sen.service.DogService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+
 
 /**
  * 在@MapperScan注解中import MapperBeanDefinitionRegistryPostProcessor.class
@@ -12,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-08-29 9:44 AM
  */
 @Configuration
-@MapperScan("com.sen.learn.dao")
+@MapperScan("com.sen..dao")
 public class AppConfig {
 
 	@Bean

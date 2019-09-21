@@ -1,4 +1,4 @@
-package com.sen.learn.mapper;
+package com.sen.mapper;
 
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;

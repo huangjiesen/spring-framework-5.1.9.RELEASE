@@ -1,10 +1,11 @@
-package com.sen.learn;
+package com.sen;
 
-import com.sen.learn.config.AppConfig;
-import com.sen.learn.dao.CatDao;
-import com.sen.learn.dao.DogDao;
+import com.sen.config.AppConfig;
+import com.sen.dao.CatDao;
+import com.sen.dao.DogDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 
 /**
  * @author HuangJS

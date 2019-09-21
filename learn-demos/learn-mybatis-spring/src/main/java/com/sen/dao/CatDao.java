@@ -1,8 +1,8 @@
-package com.sen.learn.dao;
+package com.sen.dao;
 
-import com.sen.learn.mapper.Mapper;
-import com.sen.learn.mapper.Param;
-import com.sen.learn.mapper.Select;
+import com.sen.mapper.Mapper;
+import com.sen.mapper.Param;
+import com.sen.mapper.Select;
 
 /**
  * @author HuangJS

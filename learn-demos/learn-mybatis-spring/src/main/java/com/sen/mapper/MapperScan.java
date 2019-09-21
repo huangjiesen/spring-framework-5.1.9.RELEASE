@@ -1,4 +1,4 @@
-package com.sen.learn.mapper;
+package com.sen.mapper;
 
 import org.springframework.context.annotation.Import;
 
