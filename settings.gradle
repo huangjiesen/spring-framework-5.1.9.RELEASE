@@ -31,4 +31,6 @@ rootProject.children.each {project ->
 include 'learn-demos'
 include 'learn-demos:learn-mybatis-spring'
 findProject(':learn-demos:learn-mybatis-spring')?.name = 'learn-mybatis-spring'
+include 'learn-demos:learn-ioc'
+findProject(':learn-demos:learn-ioc')?.name = 'learn-ioc'
 
