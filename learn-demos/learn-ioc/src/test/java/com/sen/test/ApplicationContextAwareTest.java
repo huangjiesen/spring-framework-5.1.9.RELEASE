@@ -1,4 +1,4 @@
-package com.sen;
+package com.sen.test;
 
 import com.sen.aware.ApplicationContextHolder;
 import com.sen.config.ApplicationContextHolderConfig;

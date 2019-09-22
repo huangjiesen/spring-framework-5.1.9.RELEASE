@@ -6,7 +6,10 @@ package com.sen;
  */
 public class IocApplication {
 	public static void main(String[] args) {
-
+		System.out.println("fjdskalfjdksal");
+		System.out.println("fjdskalfjdksal");
+		System.out.println("fjdskalfjdksal");
+		System.out.println("fjdskalfjdksal");
 	}
 }
 
