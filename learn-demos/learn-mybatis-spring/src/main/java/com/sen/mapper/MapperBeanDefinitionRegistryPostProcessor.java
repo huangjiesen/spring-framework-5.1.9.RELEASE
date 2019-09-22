@@ -13,6 +13,7 @@ import org.springframework.core.type.AnnotationMetadata;
  */
 public class MapperBeanDefinitionRegistryPostProcessor implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
 	private ResourceLoader resourceLoader;
+
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 		// 获取MapperScan注解实例

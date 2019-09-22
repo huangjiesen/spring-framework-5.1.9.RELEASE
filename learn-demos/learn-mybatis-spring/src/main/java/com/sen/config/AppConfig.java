@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-
 /**
  * 在@MapperScan注解中import MapperBeanDefinitionRegistryPostProcessor.class
+ *
  * @author HuangJS
  * @date 2019-08-29 9:44 AM
  */

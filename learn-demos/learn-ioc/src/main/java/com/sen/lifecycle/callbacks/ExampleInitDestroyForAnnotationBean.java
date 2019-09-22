@@ -4,8 +4,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
- *
- *
  * @author HuangJS
  * @date 2019-09-21 9:16 下午
  */
@@ -23,6 +21,7 @@ public class ExampleInitDestroyForAnnotationBean {
 	public void init2() throws Exception {
 		System.out.println("ExampleInitDestroyForAnnotationBean for @PostConstruct.init2()");
 	}
+
 	@PostConstruct
 	public void init3() throws Exception {
 		System.out.println("ExampleInitDestroyForAnnotationBean for @PostConstruct.init3()");
@@ -33,6 +32,7 @@ public class ExampleInitDestroyForAnnotationBean {
 	public void destroy() throws Exception {
 		System.out.println("ExampleInitDestroyForAnnotationBean for @PreDestroy.destroy()");
 	}
+
 	@PreDestroy
 	public void destroy1() throws Exception {
 		System.out.println("ExampleInitDestroyForAnnotationBean for @PreDestroy.destroy1()");

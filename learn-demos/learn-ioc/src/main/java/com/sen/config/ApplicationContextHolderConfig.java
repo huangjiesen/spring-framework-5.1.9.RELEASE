@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Bean;
  */
 public class ApplicationContextHolderConfig {
 
-	@Bean
-	public ApplicationContextHolder applicationContextHolder() {
-		 System.out.println("ApplicationContextHolder: config bean getInstance befer()");
-		 ApplicationContextHolder instance = ApplicationContextHolder.getInstance();
-		 System.out.println("ApplicationContextHolder: config bean getInstance after()");
-		 return instance;
-	}
+    @Bean
+    public ApplicationContextHolder applicationContextHolder() {
+        System.out.println("ApplicationContextHolder: config bean getInstance befer()");
+        ApplicationContextHolder instance = ApplicationContextHolder.getInstance();
+        System.out.println("ApplicationContextHolder: config bean getInstance after()");
+        return instance;
+    }
 
-	@Bean
-	public Globals globals() {
-		Globals globals = new Globals();
-		globals.setUrl("www.baidu.com");
-		return globals;
-	}
+    @Bean
+    public Globals globals() {
+        Globals globals = new Globals();
+        globals.setUrl("www.baidu.com");
+        return globals;
+    }
 }

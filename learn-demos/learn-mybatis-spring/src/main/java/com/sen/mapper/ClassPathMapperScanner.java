@@ -43,7 +43,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 			// 修改bean class为MapperFactoryBean，并将原bean作为构造参数传入
 			definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // 构造函数参数
 			definition.setBeanClass(MapperFactoryBean.class);                                 // factory bean
-			definition.getPropertyValues().add("proxyTargetName",beanClassName); // 属性注入
+			definition.getPropertyValues().add("proxyTargetName", beanClassName); // 属性注入
 
 			// 根据类型自动注入 - 对MapperFactoryBean的一些属性的set方法进行自动调用，以注入spring容器存在的引用
 			definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);

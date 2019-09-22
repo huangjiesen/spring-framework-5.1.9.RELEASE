@@ -15,7 +15,7 @@ public class ApplicationContextAwareTest {
 	@Before
 	public void before() {
 		//ApplicationContext context =
-				new AnnotationConfigApplicationContext(ApplicationContextHolderConfig.class);
+		new AnnotationConfigApplicationContext(ApplicationContextHolderConfig.class);
 		//Globals bean = context.getBean(Globals.class);
 		//System.out.println("before out "+bean);
 	}

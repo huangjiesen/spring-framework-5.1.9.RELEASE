@@ -11,7 +11,7 @@ import java.lang.reflect.Proxy;
  */
 public class MapperProxyUtil {
 
-	public static <T> T getProxy(Class<T> clazz,SqlSession session) {
+	public static <T> T getProxy(Class<T> clazz, SqlSession session) {
 		return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ProxyInvocationHandler(session));
 	}
 
@@ -46,7 +46,7 @@ public class MapperProxyUtil {
 		}
 
 		// 简单的sql参数替换
-		private String sqlParamHandler(String sql,Method method,Object[] args) {
+		private String sqlParamHandler(String sql, Method method, Object[] args) {
 			if (args.length == 1) {
 				return sql.replaceAll("#\\{_parameter\\}", args[0].toString());
 			}

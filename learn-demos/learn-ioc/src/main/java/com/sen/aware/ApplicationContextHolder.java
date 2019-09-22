@@ -11,7 +11,9 @@ import org.springframework.context.ApplicationContextAware;
 public class ApplicationContextHolder implements ApplicationContextAware {
 	private static final ApplicationContextHolder INSTANCE = new ApplicationContextHolder();
 	public static ApplicationContext context;
-	private ApplicationContextHolder(){}
+
+	private ApplicationContextHolder() {
+	}
 
 	public static ApplicationContextHolder getInstance() {
 		System.out.println("ApplicationContextHolder:  getInstance()");

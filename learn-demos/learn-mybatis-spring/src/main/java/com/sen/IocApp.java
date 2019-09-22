@@ -23,6 +23,6 @@ public class IocApp {
 
 		System.out.println();
 		CatDao catDao = context.getBean(CatDao.class);
-		catDao.select("tomo",22);
+		catDao.select("tomo", 22);
 	}
 }
