@@ -7,7 +7,6 @@
   - [Access to Binaries](#access-to-binaries)
   - [Documentation](#documentation)
   - [Build from Source](#build-from-source)
-- [hahaha](#hahaha)
   - [Stay in Touch](#stay-in-touch)
   - [License](#license)
 
@@ -35,8 +34,6 @@ The Spring Framework maintains reference documentation ([published](https://docs
 ## Build from Source
 
 See the [Build from Source](https://github.com/spring-projects/spring-framework/wiki/Build-from-Source) Wikipedia page and the [CONTRIBUTING.md](CONTRIBUTING.md) file.
-
-# hahaha
 
 ## Stay in Touch
 
