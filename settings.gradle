@@ -35,4 +35,6 @@ include 'learn-demos:learn-ioc'
 findProject(':learn-demos:learn-ioc')?.name = 'learn-ioc'
 include 'learn-demos:learn-ioc:ioc-BeanPostProcessor'
 findProject(':learn-demos:learn-ioc:ioc-BeanPostProcessor')?.name = 'ioc-BeanPostProcessor'
+include 'learn-demos:learn-aop'
+findProject(':learn-demos:learn-aop')?.name = 'learn-aop'
 
