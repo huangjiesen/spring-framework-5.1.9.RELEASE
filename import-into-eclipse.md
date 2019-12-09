@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Spring Framework - Eclipse/STS Project Import Guide](#spring-framework---eclipsests-project-import-guide)
+  - [Steps](#steps)
+  - [Known Issues](#known-issues)
+  - [Tips](#tips)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Spring Framework - Eclipse/STS Project Import Guide
 
 This document will guide you through the process of importing the Spring Framework

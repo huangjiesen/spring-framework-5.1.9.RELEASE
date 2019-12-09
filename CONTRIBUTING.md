@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Contributing  to the Spring Framework](#contributing--to-the-spring-framework)
+    - [Table of Contents](#table-of-contents)
+    - [Code of Conduct](#code-of-conduct)
+    - [How to Contribute](#how-to-contribute)
+      - [Discuss](#discuss)
+      - [Create a Ticket](#create-a-ticket)
+      - [Ticket Lifecycle](#ticket-lifecycle)
+      - [Submit a Pull Request](#submit-a-pull-request)
+    - [Build from Source](#build-from-source)
+    - [Source Code Style](#source-code-style)
+    - [Reference Docs](#reference-docs)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Contributing  to the Spring Framework
 
 First off, thank you for taking the time to contribute! :+1: :tada: 

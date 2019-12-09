@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [<img src="src/docs/asciidoc/images/spring-framework.png" width="80" height="80"> Spring Framework](#img-srcsrcdocsasciidocimagesspring-frameworkpng-width80-height80-spring-framework)
+  - [Code of Conduct](#code-of-conduct)
+  - [Access to Binaries](#access-to-binaries)
+  - [Documentation](#documentation)
+  - [Build from Source](#build-from-source)
+- [hahaha](#hahaha)
+  - [Stay in Touch](#stay-in-touch)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # <img src="src/docs/asciidoc/images/spring-framework.png" width="80" height="80"> Spring Framework
 
 This is the home of the Spring Framework: the foundation for all [Spring projects](https://spring.io/projects). Collectively the Spring Framework and the family of Spring projects is often referred to simply as "Spring". 
@@ -20,6 +35,8 @@ The Spring Framework maintains reference documentation ([published](https://docs
 ## Build from Source
 
 See the [Build from Source](https://github.com/spring-projects/spring-framework/wiki/Build-from-Source) Wikipedia page and the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+# hahaha
 
 ## Stay in Touch
 
