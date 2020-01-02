@@ -37,4 +37,6 @@ include 'learn-demos:learn-ioc:ioc-BeanPostProcessor'
 findProject(':learn-demos:learn-ioc:ioc-BeanPostProcessor')?.name = 'ioc-BeanPostProcessor'
 include 'learn-demos:learn-aop'
 findProject(':learn-demos:learn-aop')?.name = 'learn-aop'
+include 'learn-demos:learn-proxy-pattern'
+findProject(':learn-demos:learn-proxy-pattern')?.name = 'learn-proxy-pattern'
 
