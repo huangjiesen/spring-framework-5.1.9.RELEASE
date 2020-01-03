@@ -14,12 +14,68 @@
 * 目标对象：要增加控制逻辑的对象(要增强的对象)
 
 # 静态代理
-## 通过继承实现代理
+## 继承代理
+代理对象继承目标对象，重写需要增强的方法<br/>
+缺点：当有多个代理业务时，代理类数量随之增多,如果要组成代理链路则类会更多且复杂
 ```java
-
+public class UserDao {
+    public void save(String user) {
+        System.out.println("save user info:" + user);
+    }
+}
+public class UserDaoLogProxy extends UserDao {
+    @Override
+    public void save(String user) {
+        System.out.println("com.sen.sp.DogProxy: dog proxy logic");
+        super.save(user);
+    }
+}
+```
+## 聚合代理
+目标对象和代理对象实现同一个接口，代理对象当中要包含目标对象。
+缺点：相比继承代理，组成代理链路时不需要创建新的继承链路类
+```java
+public interface UserDao {
+    void save(String user);
+}
+public class UserDaoImpl implements UserDao {
+    @Override
+    public void save(String user) {
+        System.out.println("save user info:" + user);
+    }
+}
+public class UserDaoLogProxy implements UserDao {
+    UserDao target;
+    public UserDaoLogProxy(UserDao target) {
+        this.target = target;
+    }
+    @Override
+    public void save(String user) {
+        System.out.println(this.getClass().getSimpleName()+": logs logic");
+        target.save(user);
+    }
+}
+public class UserDaoVerifyProxy implements UserDao {
+    UserDao target;
+    public UserDaoVerifyProxy(UserDao target) {
+        this.target = target;
+    }
+    @Override
+    public void save(String user) {
+        System.out.println(this.getClass().getSimpleName()+": verify logic");
+        target.save(user);
+    }
+}
+public static void main(String[] args) {
+    UserDao target = new UserDaoImpl();
+    // 目标对象作为代理对象的属性存在，相比继承代理顺序更灵活，不存在链路继承产生更多类的问题
+    //UserDao proxy = new UserDaoVerifyProxy(new UserDaoLogProxy(target));
+    UserDao proxy = new UserDaoLogProxy(new UserDaoVerifyProxy(target));
+    proxy.save("lishi");
+}
 ```
 
-
 # 动态代理
-jdk动态代理，可允许代理接口
-类的代理，问题在于继承的方法是否要代理
+## jdk动态代理
+
+jdk动态代理，动态生成的代理类会继承`Proxy`类，基于java单继承的原则所以只可代理接口

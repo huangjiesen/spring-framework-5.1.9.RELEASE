@@ -1,11 +1,10 @@
-package com.sen.staticproxy.jdkproxy;
+package com.sen.dynamicproxy.jdkproxy;
 
 import com.sen.App;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -26,7 +25,7 @@ public class ProxyUtil  {
             packageDir.mkdirs();
         }
         Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
-        Files.write(path, javaImplementsStr(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(path, generateProxyClass(target), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
 
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -44,10 +43,14 @@ public class ProxyUtil  {
         return declaredConstructor.newInstance(handler);
     }
 
-    private static String javaImplementsStr(Class<?> target) throws IOException {
+    public interface InvocationHandler {
+        Object invoke(Object proxy, Method method, Object[] args);
+    }
+
+    private static byte[] generateProxyClass(Class<?> target) {
         StringBuilder sb = new StringBuilder();
         sb.append("package " + target.getPackage().getName() + ";\n");
-        sb.append("import com.sen.staticproxy.jdkproxy.ProxyUtil.InvocationHandler;\n");
+        sb.append("import com.sen.dynamicproxy.jdkproxy.ProxyUtil.InvocationHandler;\n");
         sb.append("import java.lang.reflect.Method;\n");
 
         sb.append("public class $" + target.getSimpleName() + "Proxy " + (target.isInterface() ? "implements " : "extends ") + target.getCanonicalName() + " {\n");
@@ -85,13 +88,12 @@ public class ProxyUtil  {
             sb.append("    }\n");
         }
         sb.append("}");
-        return sb.toString();
+        return sb.toString().getBytes();
     }
 
 
-    public interface InvocationHandler {
-        Object invoke(Object proxy, Method method, Object[] args);
-    }
+
+
 
 
     public static void main(String[] args) throws Exception {
