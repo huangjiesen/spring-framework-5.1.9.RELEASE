@@ -2,7 +2,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Spring IoC](#spring-ioc)
+- [What is IoC](#what-is-ioc)
+- [spring实现IOC的思路和方法](#spring%E5%AE%9E%E7%8E%B0ioc%E7%9A%84%E6%80%9D%E8%B7%AF%E5%92%8C%E6%96%B9%E6%B3%95)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

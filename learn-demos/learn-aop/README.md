@@ -1,3 +1,14 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Spring AOP](#spring-aop)
+  - [Spring AOP相关术语](#spring-aop%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD)
+  - [[Spring AOP包含以下几种Advice(增强)类型]](#spring-aop%E5%8C%85%E5%90%AB%E4%BB%A5%E4%B8%8B%E5%87%A0%E7%A7%8Dadvice%E5%A2%9E%E5%BC%BA%E7%B1%BB%E5%9E%8B)
+  - [Spring Aop和AspectJ的关系](#spring-aop%E5%92%8Caspectj%E7%9A%84%E5%85%B3%E7%B3%BB)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Spring AOP
 与OOP对比，面向切面，传统的OOP开发中的代码逻辑是自上而下的，而这些过程会产生一些横切性问题，这些横切性的问题和我们的主业务逻辑关系不大，这些横切性问题不会影响到主逻辑实现的，但是会散落到代码的各个部分，难以维护。AOP是处理一些横切性问题，AOP的编程思想就是把这些问题和主业务逻辑分开，达到与主业务逻辑解耦的目的。使代码的重用性和开发效率更高。
 

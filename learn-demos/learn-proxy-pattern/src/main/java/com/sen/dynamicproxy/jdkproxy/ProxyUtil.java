@@ -48,8 +48,9 @@ public class ProxyUtil  {
         sb.append("package " + target.getPackage().getName() + ";\n");
         sb.append("import com.sen.dynamicproxy.jdkproxy.ProxyUtil.InvocationHandler;\n");
         sb.append("import java.lang.reflect.Method;\n");
+        sb.append("import " + target.getCanonicalName() + ";\n");
 
-        sb.append("public class $" + target.getSimpleName() + "Proxy " + (target.isInterface() ? "implements " : "extends ") + target.getCanonicalName() + " {\n");
+        sb.append("public class $" + target.getSimpleName() + "Proxy " + (target.isInterface() ? "implements " : "extends ") + target.getSimpleName() + " {\n");
         sb.append("    private InvocationHandler handler;\n");
         sb.append("    public $" + target.getSimpleName() + "Proxy(InvocationHandler handler){\n");
         sb.append("        this.handler=handler;\n");
@@ -76,7 +77,7 @@ public class ProxyUtil  {
             sb.append("    public " + method.getReturnType().getName() + " " + method.getName() + "(" + args + ") {\n");
             sb.append("        Method method = null;\n");
             sb.append("        try {\n");
-            sb.append("            method = Class.forName(\"" + target.getTypeName() + "\").getDeclaredMethod(\"" + method.getName() + "\",new Class<?>[]{" + argsType + "});\n");
+            sb.append("            method = " + target.getSimpleName() + ".class.getDeclaredMethod(\"" + method.getName() + "\",new Class<?>[]{" + argsType + "});\n");
             sb.append("        } catch (Exception e) {\n");
             sb.append("             throw new RuntimeException(e);\n");
             sb.append("        }\n");

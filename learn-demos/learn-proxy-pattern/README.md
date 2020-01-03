@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [代理模式](#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
+- [静态代理](#%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86)
+  - [继承代理](#%E7%BB%A7%E6%89%BF%E4%BB%A3%E7%90%86)
+  - [聚合代理](#%E8%81%9A%E5%90%88%E4%BB%A3%E7%90%86)
+- [动态代理](#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
+  - [jdk动态代理](#jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
+  - [仿动态代理](#%E4%BB%BF%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 代理模式
 在代理模式（Proxy Pattern）中，一个类代表另一个类的功能。这种类型的设计模式属于结构型模式。<br />
 在代理模式中，我们创建具有现有对象的对象，以便向外界提供功能接口。
@@ -115,6 +129,8 @@ jdk只能代理接口而不能代理类是因为动态生成的代理类继承�
 1. 生成java源码文件
 1. 将java文件动态编译为class字节码文件
 1. 通过类加载器将class字节码文件加载到jvm当中，获取Class对象
+
+以下示例，为了可读性，生成代理类java源文件未判断方法只否可重写
 ```java
 public class ProxyUtil  {
     public static Object newProxyInstance(ClassLoader loader, Class<?> target, InvocationHandler handler) throws Exception{
@@ -150,8 +166,9 @@ public class ProxyUtil  {
         sb.append("package " + target.getPackage().getName() + ";\n");
         sb.append("import com.sen.dynamicproxy.jdkproxy.ProxyUtil.InvocationHandler;\n");
         sb.append("import java.lang.reflect.Method;\n");
+        sb.append("import " + target.getCanonicalName() + ";\n");
 
-        sb.append("public class $" + target.getSimpleName() + "Proxy " + (target.isInterface() ? "implements " : "extends ") + target.getCanonicalName() + " {\n");
+        sb.append("public class $" + target.getSimpleName() + "Proxy " + (target.isInterface() ? "implements " : "extends ") + target.getSimpleName() + " {\n");
         sb.append("    private InvocationHandler handler;\n");
         sb.append("    public $" + target.getSimpleName() + "Proxy(InvocationHandler handler){\n");
         sb.append("        this.handler=handler;\n");
@@ -178,7 +195,7 @@ public class ProxyUtil  {
             sb.append("    public " + method.getReturnType().getName() + " " + method.getName() + "(" + args + ") {\n");
             sb.append("        Method method = null;\n");
             sb.append("        try {\n");
-            sb.append("            method = Class.forName(\"" + target.getTypeName() + "\").getDeclaredMethod(\"" + method.getName() + "\",new Class<?>[]{" + argsType + "});\n");
+            sb.append("            method = " + target.getSimpleName() + ".class.getDeclaredMethod(\"" + method.getName() + "\",new Class<?>[]{" + argsType + "});\n");
             sb.append("        } catch (Exception e) {\n");
             sb.append("             throw new RuntimeException(e);\n");
             sb.append("        }\n");
@@ -187,53 +204,6 @@ public class ProxyUtil  {
         }
         sb.append("}");
         return sb.toString();
-    }
-}
-public class ProxyDemo {
-    public interface Animal {
-        String eat(String food);
-    }
-    
-    public static class Hunter {
-        public boolean fire(){
-            System.out.println("Hunter fire");
-            return false;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        Animal animalProxy = (Animal) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Animal.class, (proxy, method, args1) -> {
-            Class<?> declaringClass = method.getDeclaringClass();
-            if (Object.class.equals(declaringClass)) {
-                try {
-                    return method.invoke(proxy, args1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("proxy interface logs --------------------");
-            return method.getName() + "," + args1[0];
-        });
-        System.out.println("animalProxy result:"+animalProxy.eat("cookie"));
-
-        Hunter hunterProxy = (Hunter) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Hunter.class, new ProxyUtil.InvocationHandler() {
-            Hunter hunter = new Hunter();
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) {
-                try {
-                    Class<?> declaringClass = method.getDeclaringClass();
-                    if (Object.class.equals(declaringClass)) {
-                        return method.invoke(proxy, args);
-                    }
-
-                    System.out.println("proxy class logs --------------------");
-                    return method.invoke(hunter, args);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        System.out.println("hunterProxy result:"+hunterProxy.fire());
     }
 }
 ```
