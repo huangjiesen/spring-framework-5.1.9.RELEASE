@@ -125,12 +125,12 @@ public class JdkProxyDemo {
 
 ## 仿动态代理
 jdk只能代理接口而不能代理类是因为动态生成的代理类继承了`Proxy`类，如果改为继承`代理目标类`则可实现类的代理<br/>
+
 动态代理的实现步骤：
 1. 生成java源码文件
 1. 将java文件动态编译为class字节码文件
 1. 通过类加载器将class字节码文件加载到jvm当中，获取Class对象
 
-以下示例，为了可读性，生成代理类java源文件未判断方法只否可重写、及代码的优化
 ```java
 public class ProxyUtil  {
     // 代理类增强回调
@@ -262,4 +262,22 @@ public class ProxyDemo {
     }
 }
 ```
+以上示例，为了可读性，生成代理类java源文件未判断方法只否可重写、及代码的优化。
+`jdk动态代理`底层实现时不会产生java源文件，直接生成代理类的class字节码，再调用`native`方法将class字节码转成代理类的`Class<?>`对象。具体参见方法`java.lang.reflect.Proxy.ProxyClassFactory.apply`
+```
+public Class<?> apply(ClassLoader loader, Class<?>[] interfaces) {
+    // .... 其他代码省略
+    byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);
+    try {
+        // 调用本地方法将字节码proxyClassFile转为代理类的Class<?>对象
+        return defineClass0(loader, proxyName,proxyClassFile, 0, proxyClassFile.length);
+    } catch (ClassFormatError e) {
+        // .... 其他代码省略
+    }
+}
+
+private static native Class<?> defineClass0(ClassLoader loader, String name,
+                                            byte[] b, int off, int len);
+```
+
 
