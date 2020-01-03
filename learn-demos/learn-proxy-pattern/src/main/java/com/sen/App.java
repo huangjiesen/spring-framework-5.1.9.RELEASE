@@ -1,6 +1,5 @@
 package com.sen;
 
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,26 +11,37 @@ public class App {
 
     public static void main(String[] args)  {
 
-        Method sss3 = null;
-        try {
-            Class.forName("com.sss");
-            sss3 = Test3.class.getDeclaredMethod("sss5",new Class<?>[]{});
-        } catch (NoSuchMethodException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(sss3.getName());
 
-        for (Method method : Test4.class.getMethods()) {
+        Class<?> classes = Test4.class.getSuperclass();
+        while ((classes = Test4.class.getSuperclass()) != null) {
 
-            System.out.println(method.getName()+"  ->   "+method.getDeclaringClass());
         }
 
+        //Method sss3 = null;
+        //try {
+        //    Class.forName("com.sss");
+        //    sss3 = Test3.class.getDeclaredMethod("sss5",new Class<?>[]{});
+        //} catch (NoSuchMethodException | ClassNotFoundException e) {
+        //    throw new RuntimeException(e);
+        //}
+        //System.out.println(sss3.getName());
+        //
+        //for (Method method : Test4.class.getMethods()) {
+        //
+        //    System.out.println(method.getName()+"  ->   "+method.getDeclaringClass());
+        //}
+        //
+        //
+        //System.out.println("--------------");
+        //for (Method method : Test4.class.getDeclaredMethods()) {
+        //    System.out.println(method.getName()+"  ->   "+method.getDeclaringClass());
+        //}
 
-        System.out.println("--------------");
-        for (Method method : Test4.class.getDeclaredMethods()) {
-            System.out.println(method.getName()+"  ->   "+method.getDeclaringClass());
-        }
+
+
     }
+
+
 
     public void sss() {
 

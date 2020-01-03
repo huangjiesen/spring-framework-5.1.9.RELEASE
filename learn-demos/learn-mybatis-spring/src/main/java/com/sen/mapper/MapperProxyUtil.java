@@ -11,9 +11,9 @@ import java.lang.reflect.Proxy;
  */
 public class MapperProxyUtil {
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    //@SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> T getProxy(Class<T> clazz, SqlSession session) {
-        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, new ProxyInvocationHandler(session));
+        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, new ProxyInvocationHandler(session));
     }
 
     public static class ProxyInvocationHandler implements InvocationHandler {

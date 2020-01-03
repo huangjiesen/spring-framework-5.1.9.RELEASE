@@ -1,7 +1,5 @@
 package com.sen.dynamicproxy.jdkproxy;
 
-import com.sen.App;
-
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
@@ -11,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
 
 /**
  * @author HuangJS
@@ -25,29 +22,28 @@ public class ProxyUtil  {
             packageDir.mkdirs();
         }
         Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
-        Files.write(path, generateProxyClass(target), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(path, generateProxyJava(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
 
-
+        // 编译java源文件
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         int flag = compiler.run(null, null, null, path.toString());
         if(flag!=0){
             throw new RuntimeException("编译失败");
         }
-
-
         // 如果代理类生成在外部，则需要URLClassLoader进行加载，如D:/com/sen/$TestProxy.java
         // loader = new URLClassLoader(new URL[]{new URL("file://D://")});
 
+        // 加载类，并通过反射得到代理对象
         Class<?> aClass = loader.loadClass(target.getPackage().getName() + ".$" + target.getSimpleName() + "Proxy");
         Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(InvocationHandler.class);
         return declaredConstructor.newInstance(handler);
     }
-
+    // 代理文件增加回调
     public interface InvocationHandler {
         Object invoke(Object proxy, Method method, Object[] args);
     }
-
-    private static byte[] generateProxyClass(Class<?> target) {
+    // 生成代理类java源文件
+    private static String generateProxyJava(Class<?> target) {
         StringBuilder sb = new StringBuilder();
         sb.append("package " + target.getPackage().getName() + ";\n");
         sb.append("import com.sen.dynamicproxy.jdkproxy.ProxyUtil.InvocationHandler;\n");
@@ -88,40 +84,6 @@ public class ProxyUtil  {
             sb.append("    }\n");
         }
         sb.append("}");
-        return sb.toString().getBytes();
-    }
-
-
-
-
-
-
-    public static void main(String[] args) throws Exception {
-        InvocationHandler handler = new InvocationHandler() {
-            App.Test4 test3 = new App.Test4();
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) {
-                try {
-                    Class<?> declaringClass = method.getDeclaringClass();
-                    if (Object.class.equals(declaringClass)) {
-                        System.out.println("method.invoke(proxy, args)");
-                        return method.invoke(proxy, args);
-                    }
-
-                    System.out.println("proxy logs --------------------");
-                    return method.invoke(test3, args);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-
-
-        // 类的代理，问题在于继承的方法是否要代理
-        App.Test4 test2 = (App.Test4)ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), App.Test4.class, handler);
-
-
-        test2.sss4(LocalDate.now(), null);
-        System.out.println(test2.toString());
+        return sb.toString();
     }
 }
