@@ -130,33 +130,10 @@ jdk只能代理接口而不能代理类是因为动态生成的代理类继承�
 1. 将java文件动态编译为class字节码文件
 1. 通过类加载器将class字节码文件加载到jvm当中，获取Class对象
 
-以下示例，为了可读性，生成代理类java源文件未判断方法只否可重写
+以下示例，为了可读性，生成代理类java源文件未判断方法只否可重写、及代码的优化
 ```java
 public class ProxyUtil  {
-    public static Object newProxyInstance(ClassLoader loader, Class<?> target, InvocationHandler handler) throws Exception{
-        String distDir = ProxyUtil.class.getClassLoader().getResource("").getPath()+"/";
-        File packageDir = new File(distDir + target.getPackage().getName().replaceAll("\\.", "/"));
-        if (!packageDir.exists()) {
-            packageDir.mkdirs();
-        }
-        Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
-        Files.write(path, generateProxyJava(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
-
-        // 编译java源文件
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        int flag = compiler.run(null, null, null, path.toString());
-        if(flag!=0){
-            throw new RuntimeException("编译失败");
-        }
-        // 如果代理类生成在外部，则需要URLClassLoader进行加载，如D:/com/sen/$TestProxy.java
-        // loader = new URLClassLoader(new URL[]{new URL("file://D://")});
-
-        // 加载类，并通过反射得到代理对象
-        Class<?> aClass = loader.loadClass(target.getPackage().getName() + ".$" + target.getSimpleName() + "Proxy");
-        Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(InvocationHandler.class);
-        return declaredConstructor.newInstance(handler);
-    }
-    // 代理文件增加回调
+    // 代理类增强回调
     public interface InvocationHandler {
         Object invoke(Object proxy, Method method, Object[] args);
     }
@@ -204,6 +181,84 @@ public class ProxyUtil  {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    
+    public static Object newProxyInstance(ClassLoader loader, Class<?> target, InvocationHandler handler) throws Exception{
+        String distDir = ProxyUtil.class.getClassLoader().getResource("").getPath()+"/";
+        File packageDir = new File(distDir + target.getPackage().getName().replaceAll("\\.", "/"));
+        if (!packageDir.exists()) {
+            packageDir.mkdirs();
+        }
+        Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
+        Files.write(path, generateProxyJava(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
+
+        // 编译java源文件
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        int flag = compiler.run(null, null, null, path.toString());
+        if(flag!=0){
+            throw new RuntimeException("编译失败");
+        }
+        // 如果代理类生成在外部，则需要URLClassLoader进行加载，如D:/com/sen/$TestProxy.java
+        // loader = new URLClassLoader(new URL[]{new URL("file://D://")});
+
+        // 加载类，并通过反射得到代理对象
+        Class<?> aClass = loader.loadClass(target.getPackage().getName() + ".$" + target.getSimpleName() + "Proxy");
+        Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(InvocationHandler.class);
+        return declaredConstructor.newInstance(handler);
+    }
+}
+```
+使用示例：
+```java
+public class ProxyDemo {
+    public interface Animal {
+        String eat(String food);
+    }
+
+    public static class Hunter {
+        public boolean fire(){
+            System.out.println("Hunter fire");
+            return false;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        // 代理接口示例
+        Animal animalProxy = (Animal) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Animal.class, (proxy, method, args1) -> {
+            Class<?> declaringClass = method.getDeclaringClass();
+            if (Object.class.equals(declaringClass)) {
+                try {
+                    return method.invoke(proxy, args1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("proxy interface logs --------------------");
+            return method.getName() + "," + args1[0];
+        });
+        System.out.println("animalProxy result:"+animalProxy.eat("cookie"));
+        
+        
+        //代理对象示例，需要对象传到InvocationHandler中，如以下示例，或通过InvocationHandler的构造方法传入
+        Hunter hunterProxy = (Hunter) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Hunter.class, new ProxyUtil.InvocationHandler() {
+            Hunter hunter = new Hunter();
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) {
+                try {
+                    Class<?> declaringClass = method.getDeclaringClass();
+                    if (Object.class.equals(declaringClass)) {
+                        return method.invoke(proxy, args);
+                    }
+
+                    System.out.println("proxy class logs --------------------");
+                    return method.invoke(hunter, args);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        System.out.println("hunterProxy result:"+hunterProxy.fire());
     }
 }
 ```

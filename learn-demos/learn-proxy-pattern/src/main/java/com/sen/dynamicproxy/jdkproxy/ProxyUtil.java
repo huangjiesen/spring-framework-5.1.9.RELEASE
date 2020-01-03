@@ -15,30 +15,7 @@ import java.nio.file.StandardOpenOption;
  * @date 2020-01-02 9:39 上午
  */
 public class ProxyUtil  {
-    public static Object newProxyInstance(ClassLoader loader, Class<?> target, InvocationHandler handler) throws Exception{
-        String distDir = ProxyUtil.class.getClassLoader().getResource("").getPath()+"/";
-        File packageDir = new File(distDir + target.getPackage().getName().replaceAll("\\.", "/"));
-        if (!packageDir.exists()) {
-            packageDir.mkdirs();
-        }
-        Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
-        Files.write(path, generateProxyJava(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
-
-        // 编译java源文件
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        int flag = compiler.run(null, null, null, path.toString());
-        if(flag!=0){
-            throw new RuntimeException("编译失败");
-        }
-        // 如果代理类生成在外部，则需要URLClassLoader进行加载，如D:/com/sen/$TestProxy.java
-        // loader = new URLClassLoader(new URL[]{new URL("file://D://")});
-
-        // 加载类，并通过反射得到代理对象
-        Class<?> aClass = loader.loadClass(target.getPackage().getName() + ".$" + target.getSimpleName() + "Proxy");
-        Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(InvocationHandler.class);
-        return declaredConstructor.newInstance(handler);
-    }
-    // 代理文件增加回调
+    // 代理类增强回调
     public interface InvocationHandler {
         Object invoke(Object proxy, Method method, Object[] args);
     }
@@ -86,5 +63,30 @@ public class ProxyUtil  {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+
+    public static Object newProxyInstance(ClassLoader loader, Class<?> target, InvocationHandler handler) throws Exception{
+        String distDir = ProxyUtil.class.getClassLoader().getResource("").getPath()+"/";
+        File packageDir = new File(distDir + target.getPackage().getName().replaceAll("\\.", "/"));
+        if (!packageDir.exists()) {
+            packageDir.mkdirs();
+        }
+        Path path = Paths.get(packageDir.getPath() + "/$" + target.getSimpleName() + "Proxy.java");
+        Files.write(path, generateProxyJava(target).getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
+
+        // 编译java源文件
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        int flag = compiler.run(null, null, null, path.toString());
+        if(flag!=0){
+            throw new RuntimeException("编译失败");
+        }
+        // 如果代理类生成在外部，则需要URLClassLoader进行加载，如D:/com/sen/$TestProxy.java
+        // loader = new URLClassLoader(new URL[]{new URL("file://D://")});
+
+        // 加载类，并通过反射得到代理对象
+        Class<?> aClass = loader.loadClass(target.getPackage().getName() + ".$" + target.getSimpleName() + "Proxy");
+        Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(InvocationHandler.class);
+        return declaredConstructor.newInstance(handler);
     }
 }

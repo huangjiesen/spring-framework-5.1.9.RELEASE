@@ -19,6 +19,7 @@ public class ProxyDemo {
     }
 
     public static void main(String[] args) throws Exception {
+        // 代理接口示例
         Animal animalProxy = (Animal) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Animal.class, (proxy, method, args1) -> {
             Class<?> declaringClass = method.getDeclaringClass();
             if (Object.class.equals(declaringClass)) {
@@ -33,6 +34,8 @@ public class ProxyDemo {
         });
         System.out.println("animalProxy result:"+animalProxy.eat("cookie"));
 
+
+        //代理对象示例，需要对象传到InvocationHandler中，如以下示例，如可通过InvocationHandler的构造方法传入
         Hunter hunterProxy = (Hunter) ProxyUtil.newProxyInstance(ProxyUtil.class.getClassLoader(), Hunter.class, new ProxyUtil.InvocationHandler() {
             Hunter hunter = new Hunter();
             @Override
